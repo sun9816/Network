@@ -147,10 +147,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="String.h" />
+    <ClInclude Include="Url.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="String.cpp" />
     <ClCompile Include="test.cpp" />
+    <ClCompile Include="Url.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

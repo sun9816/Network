@@ -2,10 +2,12 @@
 #include <vector>
 #include <string>
 #include "String.h"
+#include "Url.h"
 using namespace std;
 using namespace Network;
+
+
 int main(void) {
-	String str("helloworled");
-	cout << str.substr("l", "d", 4).stdstr();
+	cout << Url::encodeURIComponent("https://www.baidu.com/ a b c").stdstr();
 	return 0;
 }
