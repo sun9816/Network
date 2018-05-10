@@ -146,10 +146,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Cookie.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="Url.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Cookie.cpp" />
     <ClCompile Include="String.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="Url.cpp" />
