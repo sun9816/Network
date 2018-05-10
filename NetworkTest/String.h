@@ -31,7 +31,7 @@ namespace Network {
 
 		size_t find(const String & _Str, size_t _Off = 0) const;
 		
-		StringList spilt(const String & _Sep, size_t _MaxCount = -1) const;
+		StringList split(const String & _Sep, size_t _MaxCount = -1) const;
 
 		std::string stdstr() const;
 		

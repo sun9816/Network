@@ -129,7 +129,7 @@ size_t String::find(const String & _Str, size_t _Off) const {
 	return npos;
 }
 
-StringList String::spilt(const String & _Sep, size_t _MaxCount) const {
+StringList String::split(const String & _Sep, size_t _MaxCount) const {
 	size_t pos = 0, offset = 0;
 	StringList list;
 
