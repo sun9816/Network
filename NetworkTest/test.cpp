@@ -8,6 +8,5 @@ using namespace Network;
 
 
 int main(void) {
-	cout << Url::encodeURIComponent("https://www.baidu.com/ a b c").stdstr();
 	return 0;
 }

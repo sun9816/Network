@@ -33,7 +33,7 @@ String Url::encodeURI(const String & _Str) {
 }
 
 String Url::decodeURI(const String & _Str) {
-	return decode(_Str);
+	return decode(_Str, _encodeURITables);
 }
 
 String Url::encodeURIComponent(const String & _Str) {
@@ -41,17 +41,17 @@ String Url::encodeURIComponent(const String & _Str) {
 }
 
 String Url::decodeURIComponent(const String & _Str) {
-	return decode(_Str);
+	return decode(_Str, _encodeURIComponentTables);
 }
 
 String Url::encode(const String & _Str, const char * _Tables) {
 	String ret;
 
 	for (auto & it : _Str) {
-		if (_Tables[it]) {
+		if (_Tables[(unsigned char)it]) {
 			ret.push_back('%');
-			ret.push_back(DEC_TO_HEX(it >> 4));
-			ret.push_back(DEC_TO_HEX(it & 0x0F));
+			ret.push_back(DEC_TO_HEX((unsigned char)it >> 4));
+			ret.push_back(DEC_TO_HEX((unsigned char)it & 0x0F));
 		}
 		else {
 			ret.push_back(it);
@@ -61,7 +61,7 @@ String Url::encode(const String & _Str, const char * _Tables) {
 	return ret;
 }
 
-String Url::decode(const String & _Str) {
+String Url::decode(const String & _Str, const char *_Tables) {
 	String ret;
 
 	for (size_t i = 0; i < _Str.size(); ++i) {
@@ -71,9 +71,11 @@ String Url::decode(const String & _Str) {
 				return String("");
 			}
 
-			ch = (HEX_TO_DEC(_Str[i + 1]) << 4) + (HEX_TO_DEC(_Str[i + 2]));
-			i += 2;
-
+			char dec =  (HEX_TO_DEC(_Str[i + 1]) << 4) + (HEX_TO_DEC(_Str[i + 2]));
+			if (_Tables[(unsigned char)dec]) {
+				ch = dec;
+				i += 2;
+			}
 		}
 		ret.push_back(ch);
 	}

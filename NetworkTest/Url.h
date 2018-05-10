@@ -15,7 +15,7 @@ namespace Network {
 
 	private:
 		static String encode(const String & _Str, const char *_Tables);
-		static String decode(const String & _Str);
+		static String decode(const String & _Str, const char *_Tables);
 
 	};
 }
