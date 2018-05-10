@@ -32,6 +32,11 @@ String::String(const char * _Str, size_t _Size) {
 	});
 }
 
+String::String(const string & _Other) :
+	vector(_Other.size()) {
+	memcpy(vector::data(), _Other.data(), _Other.size());
+}
+
 String::String(const String & _Other) :
 	vector(_Other) {
 }
@@ -145,6 +150,9 @@ string String::stdstr() const {
 }
 
 String String::left(size_t _Size) const {
+	if (_Size == npos) {
+		return String("");
+	}
 	if (vector::size() <= _Size) {
 		return *this;
 	}
@@ -152,6 +160,9 @@ String String::left(size_t _Size) const {
 }
 
 String String::right(size_t _Size) const {
+	if (_Size == npos) {
+		return String("");
+	}
 	if (vector::size() <= _Size) {
 		return *this;
 	}
@@ -159,10 +170,14 @@ String String::right(size_t _Size) const {
 }
 
 String String::mid(size_t _Off, size_t _Size) const {
+	if (_Off == npos) {
+		return String("");
+	}
 	if (vector::size() <= _Off) {
 		return String("");
 	}
-	if (vector::size() <= _Size + _Off) {
+	if (_Size == npos
+		|| vector::size() <= _Size + _Off) {
 		return String(vector::begin() + _Off, vector::end());
 	}
 	return String(vector::begin() + _Off, vector::begin() + _Off + _Size);
@@ -224,6 +239,12 @@ String & String::operator+=(const String & _Str) {
 
 String & String::operator+=(char _Ch) {
 	return append(_Ch);
+}
+
+String & String::operator=(const String & _Str) {
+	vector::resize(_Str.size());
+	memcpy(vector::data(), _Str.data(), _Str.size());
+	return *this;
 }
 
 bool String::operator==(const String & _Str) const {

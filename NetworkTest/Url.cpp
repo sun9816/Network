@@ -1,13 +1,10 @@
 #include "Url.h"
+#include <regex>
 #include <cctype>
+
 using namespace std;
 using namespace Network;
 
-Url::Url() {
-}
-
-Url::~Url() {
-}
 
 #define DEC_TO_HEX(x)	(((x)>=10)?'A'+(x)-10:'0'+(x))
 #define HEX_TO_DEC(x)	(::isdigit(x)?(x)-'0':(::toupper(x)-'A'+10))
@@ -27,6 +24,66 @@ static const char _encodeURIComponentTables[] = {
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 };
+
+Url::Url() {
+}
+
+Url::Url(const String & _Str) {
+	setUrl(_Str);
+}
+
+Url::Url(const Url & _Url) :
+	m_mapUrl(_Url.m_mapUrl) {
+}
+
+Url::~Url() {
+}
+
+bool Url::setUrl(const String & _Str) {
+	static const char *names[] = { URL_URL, URL_SCHEME, URL_SLASH, URL_HOST, URL_PORT, URL_PATH, URL_QUERY, URL_HASH };
+
+	regex re(R"(^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$)");
+	string str = _Str.stdstr();
+	smatch sma;
+
+	m_mapUrl.clear();
+	if (!regex_match(str, sma, re)
+		|| sma.size() != 8) {
+		return false;
+	}
+
+	for (size_t i = 0; i < sma.size(); ++i) {
+		m_mapUrl[names[i]] = sma.str(i);
+	}
+	return true;
+}
+
+void Url::setValue(const String & _Name, const String & _Str) {
+	m_mapUrl[_Name] = _Str;
+}
+
+String Network::Url::value(const String & _Name) {
+	String str = m_mapUrl[_Name];
+	if (!str.empty()) {
+		return str;
+	}
+
+	if (_Name == URL_PORT) {
+		if (m_mapUrl[URL_SCHEME].lower() == "http") {
+			return String("80");
+		}
+		if (m_mapUrl[URL_SCHEME].lower() == "https") {
+			return String("443");
+		}
+		return String("");
+	}
+
+	if (_Name == URL_PATH) {
+		return String("/");
+	}
+
+	return String("");
+}
 
 String Url::encodeURI(const String & _Str) {
 	return encode(_Str, _encodeURITables);

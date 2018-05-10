@@ -13,6 +13,7 @@ namespace Network {
 		String(size_t _Size, char _Ch = 0);
 		String(const char *_Str);
 		String(const char *_Str, size_t _Size);
+		String(const std::string & _Other);
 		String(const String & _Other);
 		String(String && _Other);
 		String(const_iterator _First, const_iterator _Last);
@@ -48,6 +49,7 @@ namespace Network {
 	public:
 		String & operator+=(const String & _Str);
 		String & operator+=(char _Ch);
+		String & operator=(const String & _Str);
 
 		bool operator==(const String & _Str) const;
 		bool operator>(const String & _Str) const;
