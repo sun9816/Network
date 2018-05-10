@@ -52,6 +52,10 @@ namespace Network {
 		bool operator==(const String & _Str) const;
 		bool operator>(const String & _Str) const;
 		bool operator<(const String & _Str) const;
+
+	public:
+		static String toUTF8(const String & _Str);
+		static String fromUTF8(const String & _Str);
 	};
 
 	class StringList : public std::vector<String> {

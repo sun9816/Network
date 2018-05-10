@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <cstdarg>
 #include <memory>
+#include <Windows.h>
 
 using namespace std;
 using namespace Network;
@@ -235,6 +236,54 @@ bool String::operator>(const String & _Str) const {
 
 bool String::operator<(const String & _Str) const {
 	return compare(_Str) < 0;
+}
+
+String String::toUTF8(const String & _Str) {
+	int wideSize = MultiByteToWideChar(CP_ACP, 0, _Str.data(), _Str.size(), nullptr, 0);
+	if (wideSize == 0) {
+		return String("");
+	}
+
+	shared_ptr<wchar_t> wcharBuffer(new(nothrow) wchar_t[wideSize]);
+	if (MultiByteToWideChar(CP_ACP, 0, _Str.data(), _Str.size(), wcharBuffer.get(), wideSize) == 0) {
+		return String("");
+	}
+
+	int multiSize = WideCharToMultiByte(CP_UTF8, 0, wcharBuffer.get(), wideSize, nullptr, 0, nullptr, nullptr);
+	if (multiSize == 0) {
+		return String("");
+	}
+
+	String multiBuffer(multiSize, 0);
+	if (WideCharToMultiByte(CP_UTF8, 0, wcharBuffer.get(), wideSize, const_cast<char *>(multiBuffer.data()), multiBuffer.size(), nullptr, nullptr) == 0) {
+		return String("");
+	}
+
+	return multiBuffer;
+}
+
+String String::fromUTF8(const String & _Str) {
+	int wideSize = MultiByteToWideChar(CP_UTF8, 0, _Str.data(), _Str.size(), nullptr, 0);
+	if (wideSize == 0) {
+		return String("");
+	}
+
+	shared_ptr<wchar_t> wcharBuffer(new(nothrow) wchar_t[wideSize]);
+	if (MultiByteToWideChar(CP_UTF8, 0, _Str.data(), _Str.size(), wcharBuffer.get(), wideSize) == 0) {
+		return String("");
+	}
+
+	int multiSize = WideCharToMultiByte(CP_ACP, 0, wcharBuffer.get(), wideSize, nullptr, 0, nullptr, nullptr);
+	if (multiSize == 0) {
+		return String("");
+	}
+
+	String multiBuffer(multiSize, 0);
+	if (WideCharToMultiByte(CP_ACP, 0, wcharBuffer.get(), wideSize, const_cast<char *>(multiBuffer.data()), multiBuffer.size(), nullptr, nullptr) == 0) {
+		return String("");
+	}
+
+	return multiBuffer;
 }
 
 /*StringList*/
