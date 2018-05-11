@@ -59,7 +59,7 @@ bool Cookie::setRawString(const String & _Str, const Url & _Url) {
 		}
 	}
 
-
+	return true;
 }
 
 void Cookie::_setDefault() {
