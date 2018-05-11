@@ -6,6 +6,10 @@ using namespace Network;
 Cookie::Cookie() {
 }
 
+Cookie::Cookie(const String & _Str, const Url & _Url) {
+	setRawString(_Str, _Url);
+}
+
 Cookie::~Cookie() {
 }
 

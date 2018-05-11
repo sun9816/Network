@@ -70,8 +70,8 @@ bool Url::setUrl(const String & _Str) {
 	m_strUrl = sma.str(UN_URL);
 	m_strScheme = sma.str(UN_SCHEME);
 	m_strHost = sma.str(UN_HOST);
-	m_strPort = sma.str(UN_PORT);
-	m_strPath = sma.str(UN_PATH);
+	m_strPort = sma.str(UN_PORT).empty() ? (m_strScheme.lower() == "http" ? "80" : "443") : sma.str(UN_PORT);
+	m_strPath = "/" + sma.str(UN_PATH);
 	m_strQuery = sma.str(UN_QUERY);
 	m_strHash = sma.str(UN_HASH);
 	return true;

@@ -6,6 +6,7 @@ namespace Network {
 	class Cookie {
 	public:
 		Cookie();
+		Cookie(const String & _Str, const Url & _Url);
 		virtual ~Cookie();
 
 	public:
