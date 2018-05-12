@@ -37,21 +37,25 @@ namespace Network {
 		
 		String left(size_t _Size) const;
 		String right(size_t _Size) const;
-		String mid(size_t _Off, size_t _Size) const;
+		String mid(size_t _Off, size_t _Size = npos) const;
 		String substr(const String & _Left, const String & _Right, size_t _Off = 0) const;
 
 		String upper() const;
 		String lower() const;
 		String trim() const;
 
+		int toInt(int _Base = 10) const;
+
 		int compare(const String & _Str) const;
 		
 	public:
+		String & operator+(const String & _Str);
 		String & operator+=(const String & _Str);
 		String & operator+=(char _Ch);
 		String & operator=(const String & _Str);
 
 		bool operator==(const String & _Str) const;
+		bool operator!=(const String & _Str) const;
 		bool operator>(const String & _Str) const;
 		bool operator<(const String & _Str) const;
 

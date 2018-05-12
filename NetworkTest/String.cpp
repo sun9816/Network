@@ -219,6 +219,16 @@ String String::trim() const {
 	return String(first, last.base());
 }
 
+int String::toInt(int _Base) const {
+	try {
+		return stoi(stdstr(), 0, _Base);
+	}
+	catch (...) {
+		return 0;
+	}
+	return 0;
+}
+
 int String::compare(const String & _Str) const {
 	if (vector::size() != _Str.size()) {
 		return vector::size() - _Str.size();
@@ -231,6 +241,10 @@ int String::compare(const String & _Str) const {
 	}
 
 	return 0;
+}
+
+String & String::operator+(const String & _Str) {
+	return append(_Str);
 }
 
 String & String::operator+=(const String & _Str) {
@@ -249,6 +263,10 @@ String & String::operator=(const String & _Str) {
 
 bool String::operator==(const String & _Str) const {
 	return compare(_Str) == 0;
+}
+
+bool String::operator!=(const String & _Str) const {
+	return compare(_Str) != 0;
 }
 
 bool String::operator>(const String & _Str) const {
