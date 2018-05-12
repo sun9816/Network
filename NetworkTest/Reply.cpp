@@ -55,6 +55,10 @@ Reply & Reply::operator==(const Reply & _Rep) {
 	m_mapHeader = _Rep.m_mapHeader;
 }
 
+void Reply::setError(int _Error) {
+	m_nError = _Error;
+}
+
 void Reply::setUrl(const Url & _Url) {
 	m_Url = _Url;
 }

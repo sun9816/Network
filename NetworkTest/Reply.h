@@ -19,6 +19,7 @@ namespace Network {
 		Reply & operator==(const Reply & _Rep);
 
 	private:
+		void setError(int _Error);
 		void setUrl(const Url & _Url);
 		void setHeader(const String & _Name, const String & _Value);
 
