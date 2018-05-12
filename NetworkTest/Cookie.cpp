@@ -8,7 +8,7 @@ using namespace Network;
 
 #define COOKIE_SECURE			"secure"
 #define COOKIE_HTTPONLY			"httponly"
-#define COOKIE_DOMAIL			"domail"
+#define COOKIE_DOMAIL			"domain"
 #define COOKIE_PATH				"path"
 #define COOKIE_MAXAGE			"max-age"
 #define COOKIE_EXPIRES			"expires"
@@ -21,6 +21,16 @@ Cookie::Cookie() {
 Cookie::Cookie(const String & _Str, const Url & _Url) {
 	_initMap();
 	setRawString(_Str, _Url);
+}
+Cookie::Cookie(const Cookie & _Cookie) :
+	m_strName(_Cookie.m_strName) ,
+	m_strValue(_Cookie.m_strValue) ,
+	m_strDomain(_Cookie.m_strDomain),
+	m_strPath(_Cookie.m_strPath),
+	m_timeExpires(_Cookie.m_timeExpires),
+	m_bHttpOnly(_Cookie.m_bHttpOnly),
+	m_bSecure(_Cookie.m_bSecure) {
+	_initMap();
 }
 
 Cookie::~Cookie() {
@@ -51,8 +61,8 @@ bool Cookie::setRawString(const String & _Str, const Url & _Url) {
 		}
 	}
 
-	if (m_strDomail.empty()) {
-		m_strDomail = _Url.host().left(4) != "www." ? _Url.host() : _Url.host().mid(4);
+	if (m_strDomain.empty()) {
+		m_strDomain = _Url.host().left(4) != "www." ? _Url.host() : _Url.host().mid(4);
 	}
 
 	if (m_strPath.empty()) {
@@ -70,8 +80,8 @@ String Cookie::value() const {
 	return m_strValue;
 }
 
-String Cookie::domail() const {
-	return m_strDomail;
+String Cookie::domain() const {
+	return m_strDomain;
 }
 
 String Cookie::path() const {
@@ -90,10 +100,29 @@ bool Cookie::isSecure() const {
 	return m_bSecure;
 }
 
+bool Network::Cookie::operator==(const Cookie & _Cookie) const {
+	return m_strName == _Cookie.m_strName && m_strValue == _Cookie.m_strValue;
+}
+
+bool Network::Cookie::operator!=(const Cookie & _Cookie) const {
+	return !operator==(_Cookie);
+}
+
+Cookie & Network::Cookie::operator=(const Cookie & _Cookie) {
+	m_strName = _Cookie.m_strName;
+	m_strValue = _Cookie.m_strValue;
+	m_strDomain = _Cookie.m_strDomain;
+	m_strPath = _Cookie.m_strPath;
+	m_timeExpires = _Cookie.m_timeExpires;
+	m_bHttpOnly = _Cookie.m_bHttpOnly;
+	m_bSecure = _Cookie.m_bSecure;
+	return *this;
+}
+
 void Cookie::_setDefault() {
 	m_strName.clear();
 	m_strValue.clear();
-	m_strDomail.clear();
+	m_strDomain.clear();
 	m_strPath.clear();
 	m_timeExpires = 0;
 	m_bHttpOnly = false;
@@ -110,9 +139,9 @@ void Cookie::_initMap() {
 	m_mapKv[COOKIE_DOMAIL] = [&](const String & value) {
 		if (!value.empty()) {
 			if (value[0] != '.') {
-				m_strDomail.push_back('.');
+				m_strDomain.push_back('.');
 			}
-			m_strDomail.append(value);
+			m_strDomain.append(value);
 		}
 	};
 	m_mapKv[COOKIE_PATH] = [&](const String & value) {
@@ -151,4 +180,19 @@ void Cookie::_setGMTtime(const String & _Str) {
 	t.tm_mon = it - setMonth.begin();
 
 	m_timeExpires = mktime(&t);
+}
+
+String CookieList::join(const String & _Sep) const {
+	String ret;
+	bool isfirst = true;
+	for (auto & it : *this) {
+		if (isfirst) {
+			isfirst = false;
+		}
+		else {
+			ret += _Sep;
+		}
+		ret += it.name() + "= " + it.value();
+	}
+	return ret;
 }

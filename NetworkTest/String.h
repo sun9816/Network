@@ -30,6 +30,7 @@ namespace Network {
 		String & format_append(const char * _Format, ...);
 
 		size_t find(const String & _Str, size_t _Off = 0) const;
+		size_t rfind(const String & _Str, size_t _Off = 0) const;
 		
 		StringList split(const String & _Sep, size_t _MaxCount = -1) const;
 
@@ -66,7 +67,7 @@ namespace Network {
 
 	class StringList : public std::vector<String> {
 	public:
-		String join(const String & _Sep = String(""));
+		String join(const String & _Sep = String("")) const;
 	};
 }
 

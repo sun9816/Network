@@ -110,7 +110,7 @@ String & String::format_append(const char * _Format, ...) {
 }
 
 size_t String::find(const String & _Str, size_t _Off) const {
-	if (vector::size() > _Off) {
+	/*if (vector::size() > _Off) {
 		for (size_t i = _Off; i < vector::size(); ++i) {
 			bool isfind = true;
 			for (size_t n = 0; n < _Str.size(); ++n) {
@@ -126,6 +126,47 @@ size_t String::find(const String & _Str, size_t _Off) const {
 		}
 
 	}
+	return npos;*/
+	if (vector::size() >= _Off + _Str.size()) {
+		auto endit = vector::end() - (_Str.size() - 1);
+		for (auto sit = vector::begin() + _Off; sit != endit; ++sit) {
+			auto stmpit = sit;
+			bool isfind = true;
+			for (auto dit = _Str.begin(); dit != _Str.end(); ++dit, ++stmpit) {
+				if (*dit != *stmpit) {
+					isfind = false;
+					break;
+				}
+			}
+
+			if (isfind) {
+				return sit - vector::begin();
+			}
+		}
+	}
+
+	return npos;
+}
+
+size_t String::rfind(const String & _Str, size_t _Off) const {
+	if (vector::size() >= _Off + _Str.size()) {
+		auto endit = vector::rend() - (_Str.size() - 1);
+		for (auto sit = vector::rbegin() + _Off; sit != endit; ++sit) {
+			auto stmpit = sit;
+			bool isfind = true;
+			for (auto dit = _Str.rbegin(); dit != _Str.rend(); ++dit, ++stmpit) {
+				if (*dit != *stmpit) {
+					isfind = false;
+					break;
+				}
+			}
+
+			if (isfind) {
+				return sit - vector::rbegin();
+			}
+		}
+	}
+
 	return npos;
 }
 
@@ -327,7 +368,7 @@ String String::fromUTF8(const String & _Str) {
 
 /*StringList*/
 
-String StringList::join(const String & _Sep) {
+String StringList::join(const String & _Sep) const {
 	String ret;
 	bool isfirst = true;
 	for (auto & it : *this) {
