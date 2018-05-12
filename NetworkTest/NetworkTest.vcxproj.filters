@@ -27,6 +27,12 @@
     <ClInclude Include="CookieJar.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Request.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Reply.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test.cpp">
@@ -42,6 +48,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="CookieJar.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Request.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Reply.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
