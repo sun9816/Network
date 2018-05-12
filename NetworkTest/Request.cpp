@@ -50,4 +50,5 @@ String Request::rawHeader(const String & _Name) const {
 Request & Request::operator=(const Request & _Req) {
 	m_mapHeader = _Req.m_mapHeader;
 	m_Url = _Req.m_Url;
+	return *this;
 }

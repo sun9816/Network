@@ -151,6 +151,7 @@
     <ClInclude Include="Reply.h" />
     <ClInclude Include="Request.h" />
     <ClInclude Include="String.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="Url.h" />
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +161,7 @@
     <ClCompile Include="Request.cpp" />
     <ClCompile Include="String.cpp" />
     <ClCompile Include="test.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Url.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

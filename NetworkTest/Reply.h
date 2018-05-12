@@ -5,6 +5,7 @@ namespace Network {
 	class Reply {
 	public:
 		Reply();
+		Reply(const Reply & _Rep);
 		virtual ~Reply();
 
 	public:
@@ -27,7 +28,7 @@ namespace Network {
 		int		m_nError;
 		Url		m_Url;
 		String	m_strBody;
-		map<String, String>		m_mapHeader;
+		std::map<String, String>		m_mapHeader;
 	};
 }
 

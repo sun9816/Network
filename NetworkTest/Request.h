@@ -20,6 +20,6 @@ namespace Network {
 
 	private:
 		Url		m_Url;
-		map<String, String>	m_mapHeader;
+		std::map<String, String>	m_mapHeader;
 	};
 }

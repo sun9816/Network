@@ -5,6 +5,8 @@
 #include "String.h"
 #include "Url.h"
 #include "CookieJar.h"
+#include "Timer.h"
+#include <windows.h>
 using namespace std;
 using namespace Network;
 
