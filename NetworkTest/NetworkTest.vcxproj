@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="Cookie.h" />
     <ClInclude Include="CookieJar.h" />
+    <ClInclude Include="IocpAgent.h" />
     <ClInclude Include="Reply.h" />
     <ClInclude Include="Request.h" />
     <ClInclude Include="String.h" />
@@ -157,6 +158,7 @@
   <ItemGroup>
     <ClCompile Include="Cookie.cpp" />
     <ClCompile Include="CookieJar.cpp" />
+    <ClCompile Include="IocpAgent.cpp" />
     <ClCompile Include="Reply.cpp" />
     <ClCompile Include="Request.cpp" />
     <ClCompile Include="String.cpp" />
